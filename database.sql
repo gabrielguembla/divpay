@@ -1,0 +1,12 @@
+CREATE DATABASE IF NOT EXISTS divpay
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
+
+USE devpay;
+
+CREATE TABLE IF NOT EXISTS users (
+
+    
+);
+
+CREATE TABLE IF NOT EXISTS nome ();
