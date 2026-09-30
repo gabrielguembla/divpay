@@ -1,0 +1,587 @@
+<!doctype html>
+
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>DivPay - Login</title>
+
+    <style>
+      /* =====================================================
+           CORES OFICIAIS DO DIVPAY
+        ===================================================== */
+
+      :root {
+        --azul-vivo: #0362f2;
+        --azul-marinho: #002e6c;
+        --preto: #000000;
+        --branco: #fdfdfd;
+        --verde: #3abb47;
+
+        --cinza: #555555;
+        --borda: #ccd5e0;
+      }
+
+      /* =====================================================
+           CONFIGURAÇÕES GERAIS
+        ===================================================== */
+
+      * {
+        margin: 0;
+        padding: 0;
+
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+
+        background-color: var(--azul-marinho);
+
+        color: var(--preto);
+
+        min-height: 100vh;
+
+        transition:
+          background-color 0.3s,
+          color 0.3s;
+      }
+
+      /* =====================================================
+           BOTÃO DE TEMA
+        ===================================================== */
+
+      .botao-tema {
+        position: fixed;
+
+        top: 15px;
+        right: 15px;
+
+        width: 42px;
+        height: 42px;
+
+        border: none;
+
+        border-radius: 50%;
+
+        background-color: var(--branco);
+
+        color: var(--preto);
+
+        font-size: 18px;
+
+        cursor: pointer;
+
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+
+        z-index: 100;
+
+        transition: 0.3s;
+      }
+
+      .botao-tema:hover {
+        transform: scale(1.05);
+
+        background-color: var(--azul-vivo);
+      }
+
+      /* =====================================================
+           CONTAINER
+        ===================================================== */
+
+      .container {
+        min-height: 100vh;
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+        padding: 20px;
+      }
+
+      /* =====================================================
+           CAIXA DE LOGIN
+        ===================================================== */
+
+      .login-box {
+        width: 100%;
+
+        max-width: 345px;
+
+        background-color: var(--branco);
+
+        padding: 38px 32px;
+
+        border-radius: 17px;
+
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+
+        transition:
+          background-color 0.3s,
+          box-shadow 0.3s;
+      }
+
+      /* =====================================================
+           LOGO
+        ===================================================== */
+
+      .logo {
+        text-align: center;
+
+        font-size: 31px;
+
+        font-weight: bold;
+
+        color: var(--preto);
+
+        margin-bottom: 5px;
+      }
+
+      .logo span {
+        color: var(--azul-vivo);
+      }
+
+      .logo strong {
+        color: var(--verde);
+      }
+
+      /* =====================================================
+           TÍTULO
+        ===================================================== */
+
+      h1 {
+        text-align: center;
+
+        color: var(--azul-marinho);
+
+        font-size: 24px;
+
+        margin-bottom: 8px;
+      }
+
+      .subtitulo {
+        text-align: center;
+
+        color: var(--cinza);
+
+        font-size: 13px;
+
+        margin-bottom: 25px;
+      }
+
+      /* =====================================================
+           CAMPOS
+        ===================================================== */
+
+      label {
+        display: block;
+
+        color: var(--azul-marinho);
+
+        font-size: 12px;
+
+        font-weight: bold;
+
+        margin-bottom: 7px;
+      }
+
+      input[type="email"],
+      input[type="password"] {
+        width: 100%;
+
+        height: 40px;
+
+        padding: 10px 12px;
+
+        border: 1px solid var(--borda);
+
+        border-radius: 7px;
+
+        background-color: var(--branco);
+
+        color: var(--preto);
+
+        font-size: 12px;
+
+        outline: none;
+
+        margin-bottom: 16px;
+
+        transition: 0.2s;
+      }
+
+      input:focus {
+        border: 2px solid var(--azul-vivo);
+      }
+
+      /* =====================================================
+           BOTÃO ENTRAR
+        ===================================================== */
+
+      .botao-entrar {
+        width: 100%;
+
+        height: 40px;
+
+        border: none;
+
+        border-radius: 7px;
+
+        background-color: var(--azul-vivo);
+
+        color: var(--branco);
+
+        font-size: 14px;
+
+        font-weight: bold;
+
+        cursor: pointer;
+
+        transition: 0.2s;
+      }
+
+      .botao-entrar:hover {
+        background-color: var(--azul-marinho);
+      }
+
+      /* =====================================================
+           MENSAGEM
+        ===================================================== */
+
+      #mensagem {
+        text-align: center;
+
+        font-size: 13px;
+
+        font-weight: bold;
+
+        margin-top: 12px;
+
+        min-height: 16px;
+      }
+
+      /* =====================================================
+           CRIAR CONTA
+        ===================================================== */
+
+      .criar-conta {
+        text-align: center;
+
+        margin-top: 20px;
+
+        padding-top: 17px;
+
+        border-top: 1px solid #e5e5e5;
+      }
+
+      .criar-conta p {
+        color: var(--cinza);
+
+        font-size: 12px;
+
+        margin-bottom: 7px;
+      }
+
+      .criar-conta a {
+        color: var(--azul-vivo);
+
+        font-size: 12px;
+
+        font-weight: bold;
+
+        text-decoration: none;
+      }
+
+      .criar-conta a:hover {
+        color: var(--verde);
+      }
+
+      /* =====================================================
+           MODO ESCURO
+        ===================================================== */
+
+      body.modo-escuro {
+        background-color: var(--preto);
+      }
+
+      body.modo-escuro .login-box {
+        background-color: #111111;
+
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      body.modo-escuro .logo {
+        color: var(--branco);
+      }
+
+      body.modo-escuro h1 {
+        color: var(--branco);
+      }
+
+      body.modo-escuro .subtitulo {
+        color: #cccccc;
+      }
+
+      body.modo-escuro label {
+        color: var(--branco);
+      }
+
+      body.modo-escuro input[type="email"],
+      body.modo-escuro input[type="password"] {
+        background-color: #222222;
+
+        color: var(--branco);
+
+        border-color: #444444;
+      }
+
+      body.modo-escuro input::placeholder {
+        color: #aaaaaa;
+      }
+
+      body.modo-escuro .criar-conta {
+        border-color: #444444;
+      }
+
+      body.modo-escuro .criar-conta p {
+        color: #cccccc;
+      }
+
+      body.modo-escuro .botao-tema {
+        background-color: #111111;
+
+        color: var(--branco);
+      }
+
+      /* =====================================================
+           RESPONSIVO
+        ===================================================== */
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 20px 15px;
+        }
+
+        .login-box {
+          padding: 32px 25px;
+        }
+
+        .logo {
+          font-size: 28px;
+        }
+      }
+
+      @media (max-width: 350px) {
+        .login-box {
+          padding: 28px 20px;
+        }
+
+        .logo {
+          font-size: 26px;
+        }
+
+        h1 {
+          font-size: 22px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- =====================================================
+         BOTÃO TEMA
+    ===================================================== -->
+
+    <button
+      class="botao-tema"
+      id="botaoTema"
+      onclick="alternarTema()"
+      aria-label="Alterar tema"
+      title="Alterar tema"
+    >
+      🌙
+    </button>
+
+    <!-- =====================================================
+         CONTAINER
+    ===================================================== -->
+
+    <div class="container">
+      <!-- =================================================
+             LOGIN
+        ================================================= -->
+
+      <div class="login-box">
+        <!-- LOGO -->
+
+        <div class="logo">Div<span>Pay</span><strong>$</strong></div>
+
+        <!-- TÍTULO -->
+
+        <h1>Entrar</h1>
+
+        <p class="subtitulo">Entre na sua conta do DivPay</p>
+
+        <!-- FORMULÁRIO -->
+
+        <form onsubmit="fazerLogin(event)">
+          <!-- E-MAIL -->
+
+          <label for="email"> E-mail </label>
+
+          <input
+            type="email"
+            id="email"
+            placeholder="Digite seu e-mail"
+            autocomplete="email"
+            required
+          />
+
+          <!-- SENHA -->
+
+          <label for="senha"> Senha </label>
+
+          <input
+            type="password"
+            id="senha"
+            placeholder="Digite sua senha"
+            autocomplete="current-password"
+            required
+          />
+
+          <!-- BOTÃO -->
+
+          <button type="submit" class="botao-entrar">Entrar</button>
+        </form>
+
+        <!-- MENSAGEM -->
+
+        <p id="mensagem"></p>
+
+        <!-- CRIAR CONTA -->
+
+        <div class="criar-conta">
+          <p>Ainda não possui uma conta?</p>
+
+          <a href="cadastro.html"> Criar uma conta </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
+
+    <script>
+      /* =====================================================
+           LOGIN
+        ===================================================== */
+
+      function fazerLogin(event) {
+        event.preventDefault();
+
+        let email = document.getElementById("email").value.trim().toLowerCase();
+
+        let senha = document.getElementById("senha").value;
+
+        let mensagem = document.getElementById("mensagem");
+
+        let usuarioSalvo = localStorage.getItem("usuario");
+
+        /* ================================================
+               VERIFICAR SE EXISTE UMA CONTA
+            ================================================ */
+
+        if (usuarioSalvo == null) {
+          mensagem.innerHTML = "Você ainda não possui uma conta.";
+
+          mensagem.style.color = "#0362F2";
+
+          return;
+        }
+
+        /* ================================================
+               LER USUÁRIO SALVO
+            ================================================ */
+
+        let usuario;
+
+        try {
+          usuario = JSON.parse(usuarioSalvo);
+        } catch (erro) {
+          mensagem.innerHTML = "Não foi possível acessar os dados da conta.";
+
+          mensagem.style.color = "#000000";
+
+          return;
+        }
+
+        /* ================================================
+               VERIFICAR LOGIN
+            ================================================ */
+
+        if (email == usuario.email.toLowerCase() && senha == usuario.senha) {
+          localStorage.setItem("logado", "true");
+
+          window.location.href = "inicio.html";
+        } else {
+          mensagem.innerHTML = "E-mail ou senha incorretos.";
+
+          mensagem.style.color = "#000000";
+        }
+      }
+
+      /* =====================================================
+           ALTERNAR TEMA
+        ===================================================== */
+
+      function alternarTema() {
+        let body = document.body;
+
+        let botao = document.getElementById("botaoTema");
+
+        body.classList.toggle("modo-escuro");
+
+        if (body.classList.contains("modo-escuro")) {
+          botao.innerHTML = "☀️";
+
+          localStorage.setItem("tema", "escuro");
+        } else {
+          botao.innerHTML = "🌙";
+
+          localStorage.setItem("tema", "claro");
+        }
+      }
+
+      /* =====================================================
+           CARREGAR TEMA SALVO
+        ===================================================== */
+
+      function carregarTema() {
+        let tema = localStorage.getItem("tema");
+
+        let botao = document.getElementById("botaoTema");
+
+        if (tema == "escuro") {
+          document.body.classList.add("modo-escuro");
+
+          botao.innerHTML = "☀️";
+        } else {
+          document.body.classList.remove("modo-escuro");
+
+          botao.innerHTML = "🌙";
+        }
+      }
+
+      /* =====================================================
+           INICIAR
+        ===================================================== */
+
+      carregarTema();
+    </script>
+  </body>
+</html>

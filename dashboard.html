@@ -1,0 +1,1307 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>DivPay - Dashboard</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body {
+        background: #000000;
+        color: #fdfdfd;
+        min-height: 100vh;
+      }
+
+      /* =========================
+           ESTRUTURA
+        ========================== */
+
+      .app {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      /* =========================
+           SIDEBAR
+        ========================== */
+
+      .sidebar {
+        width: 250px;
+        min-height: 100vh;
+        background: #002e6c;
+        padding: 30px 18px 20px;
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 100;
+      }
+
+      .logo-area {
+        text-align: center;
+        margin-bottom: 45px;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .logo-icon {
+        width: 42px;
+        height: 42px;
+        background: #0362f2;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 23px;
+        font-weight: bold;
+        color: #fdfdfd;
+      }
+
+      .logo-text {
+        font-size: 27px;
+        font-weight: bold;
+        color: #fdfdfd;
+      }
+
+      .logo-text span {
+        color: #0362f2;
+      }
+
+      .slogan {
+        margin-top: 8px;
+        font-size: 10px;
+        color: #d7e7ff;
+      }
+
+      /* =========================
+           MENU
+        ========================== */
+
+      .menu {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+
+      .menu-link {
+        height: 48px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 0 17px;
+        border-radius: 10px;
+        color: #dbeaff;
+        text-decoration: none;
+        font-size: 14px;
+        transition: 0.2s;
+      }
+
+      .menu-link:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: #fdfdfd;
+      }
+
+      .menu-link.ativo {
+        background: #0362f2;
+        color: #fdfdfd;
+      }
+
+      .menu-icon {
+        width: 20px;
+        text-align: center;
+        font-size: 17px;
+      }
+
+      .menu-bottom {
+        margin-top: auto;
+      }
+
+      .sair {
+        cursor: pointer;
+      }
+
+      /* =========================
+           MAIN
+        ========================== */
+
+      .main {
+        margin-left: 250px;
+        width: calc(100% - 250px);
+        min-height: 100vh;
+        background: #000000;
+      }
+
+      /* =========================
+           TOPBAR
+        ========================== */
+
+      .topbar {
+        height: 95px;
+        border-bottom: 1px solid #202020;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0 45px;
+        gap: 15px;
+      }
+
+      .top-button {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1px solid #303030;
+        background: #111111;
+        color: #fdfdfd;
+        cursor: pointer;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s;
+      }
+
+      .top-button:hover {
+        background: #1c1c1c;
+      }
+
+      .notification {
+        position: relative;
+      }
+
+      .notification::after {
+        content: "";
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: #3abb47;
+        border-radius: 50%;
+        top: 9px;
+        right: 10px;
+      }
+
+      .user-area {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        margin-left: 5px;
+        cursor: pointer;
+      }
+
+      .avatar {
+        width: 43px;
+        height: 43px;
+        background: #0362f2;
+        color: #fdfdfd;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .user-info {
+        min-width: 145px;
+      }
+
+      .user-name {
+        font-size: 13px;
+        font-weight: bold;
+      }
+
+      .user-type {
+        font-size: 11px;
+        color: #7fa8dc;
+        margin-top: 3px;
+      }
+
+      .arrow {
+        font-size: 12px;
+        color: #8faed0;
+      }
+
+      /* =========================
+           CONTAINER
+        ========================== */
+
+      .container {
+        max-width: 1150px;
+        margin: 0 auto;
+        padding: 42px 40px 50px;
+      }
+
+      /* =========================
+           CABEÇALHO
+        ========================== */
+
+      .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .page-title h1 {
+        font-size: 29px;
+        margin-bottom: 8px;
+      }
+
+      .page-title p {
+        color: #8ca6c5;
+        font-size: 14px;
+      }
+
+      .primary-button {
+        border: none;
+        background: #0362f2;
+        color: #fdfdfd;
+        min-height: 44px;
+        padding: 0 20px;
+        border-radius: 9px;
+        font-size: 13px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      .primary-button:hover {
+        background: #0254d0;
+      }
+
+      /* =========================
+           CARDS
+        ========================== */
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 17px;
+        margin-bottom: 30px;
+      }
+
+      .card {
+        background: #111111;
+        border: 1px solid #303030;
+        border-radius: 15px;
+        padding: 21px;
+        min-height: 145px;
+      }
+
+      .card-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 17px;
+        font-size: 18px;
+      }
+
+      .icon-blue {
+        background: #eaf2ff;
+        color: #0362f2;
+      }
+
+      .icon-green {
+        background: #eaf8ec;
+        color: #3abb47;
+      }
+
+      .icon-white {
+        background: #fdfdfd;
+        color: #002e6c;
+      }
+
+      .card-label {
+        font-size: 11px;
+        color: #7190b5;
+        margin-bottom: 7px;
+      }
+
+      .card-value {
+        font-size: 23px;
+        font-weight: bold;
+      }
+
+      .card-small {
+        color: #7895b7;
+        font-size: 10px;
+        margin-top: 6px;
+      }
+
+      /* =========================
+           GRID PRINCIPAL
+        ========================== */
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: 1.45fr 1fr;
+        gap: 20px;
+      }
+
+      .panel {
+        background: #111111;
+        border: 1px solid #303030;
+        border-radius: 15px;
+        overflow: hidden;
+      }
+
+      .panel-header {
+        padding: 20px;
+        border-bottom: 1px solid #303030;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .panel-header h2 {
+        font-size: 16px;
+      }
+
+      .panel-header p {
+        color: #7895b7;
+        font-size: 10px;
+        margin-top: 5px;
+      }
+
+      .panel-link {
+        color: #4f9aff;
+        text-decoration: none;
+        font-size: 11px;
+      }
+
+      /* =========================
+           GRUPOS
+        ========================== */
+
+      .group-list {
+        padding: 8px 20px;
+      }
+
+      .group-item {
+        min-height: 73px;
+        border-bottom: 1px solid #292929;
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      .group-item:last-child {
+        border-bottom: none;
+      }
+
+      .group-item:hover {
+        background: rgba(3, 98, 242, 0.05);
+      }
+
+      .group-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: #0362f2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .group-info {
+        flex: 1;
+      }
+
+      .group-name {
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 4px;
+      }
+
+      .group-members {
+        color: #7895b7;
+        font-size: 10px;
+      }
+
+      .group-value {
+        text-align: right;
+      }
+
+      .group-value strong {
+        font-size: 12px;
+        display: block;
+      }
+
+      .group-value small {
+        color: #7895b7;
+        font-size: 9px;
+      }
+
+      /* =========================
+           DESPESAS
+        ========================== */
+
+      .expense-list {
+        padding: 8px 20px;
+      }
+
+      .expense-item {
+        min-height: 73px;
+        border-bottom: 1px solid #292929;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .expense-item:last-child {
+        border-bottom: none;
+      }
+
+      .expense-icon {
+        width: 38px;
+        height: 38px;
+        background: #002e6c;
+        border-radius: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+      }
+
+      .expense-info {
+        flex: 1;
+      }
+
+      .expense-name {
+        font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 4px;
+      }
+
+      .expense-date {
+        font-size: 9px;
+        color: #7895b7;
+      }
+
+      .expense-value {
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      /* =========================
+           ESTADO VAZIO
+        ========================== */
+
+      .empty {
+        padding: 35px 20px;
+        text-align: center;
+        color: #7895b7;
+        font-size: 11px;
+      }
+
+      .empty-icon {
+        font-size: 27px;
+        margin-bottom: 9px;
+      }
+
+      /* =========================
+           TOAST
+        ========================== */
+
+      .toast {
+        position: fixed;
+        right: 25px;
+        bottom: 25px;
+        background: #fdfdfd;
+        color: #000000;
+        padding: 13px 18px;
+        border-radius: 9px;
+        font-size: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+        opacity: 0;
+        transform: translateY(20px);
+        pointer-events: none;
+        transition: 0.3s;
+        z-index: 500;
+      }
+
+      .toast.mostrar {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* =========================
+           MODO CLARO
+        ========================== */
+
+      body.modo-claro {
+        background: #f2f5f9;
+        color: #000000;
+      }
+
+      body.modo-claro .main {
+        background: #f2f5f9;
+      }
+
+      body.modo-claro .topbar {
+        border-color: #dce2e9;
+      }
+
+      body.modo-claro .top-button {
+        background: #fdfdfd;
+        border-color: #d7dce3;
+        color: #002e6c;
+      }
+
+      body.modo-claro .user-name,
+      body.modo-claro .page-title h1,
+      body.modo-claro .card-value,
+      body.modo-claro .group-name,
+      body.modo-claro .expense-name {
+        color: #000000;
+      }
+
+      body.modo-claro .page-title p,
+      body.modo-claro .card-label,
+      body.modo-claro .card-small,
+      body.modo-claro .group-members,
+      body.modo-claro .group-value small,
+      body.modo-claro .expense-date {
+        color: #64748b;
+      }
+
+      body.modo-claro .card,
+      body.modo-claro .panel {
+        background: #fdfdfd;
+        border-color: #dce2e9;
+      }
+
+      body.modo-claro .panel-header,
+      body.modo-claro .group-item,
+      body.modo-claro .expense-item {
+        border-color: #e1e5eb;
+      }
+
+      /* =========================
+           RESPONSIVO
+        ========================== */
+
+      @media (max-width: 1100px) {
+        .sidebar {
+          width: 220px;
+        }
+
+        .main {
+          margin-left: 220px;
+          width: calc(100% - 220px);
+        }
+
+        .cards {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .content-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 750px) {
+        .app {
+          display: block;
+        }
+
+        .sidebar {
+          position: relative;
+          width: 100%;
+          min-height: auto;
+          padding: 18px;
+        }
+
+        .main {
+          margin-left: 0;
+          width: 100%;
+        }
+
+        .logo-area {
+          margin-bottom: 20px;
+        }
+
+        .menu {
+          flex-direction: row;
+          flex-wrap: wrap;
+        }
+
+        .menu-link {
+          flex: 1;
+          min-width: 120px;
+        }
+
+        .menu-bottom {
+          margin-top: 15px;
+        }
+
+        .topbar {
+          height: 75px;
+          padding: 0 20px;
+        }
+
+        .container {
+          padding: 30px 20px 40px;
+        }
+
+        .page-header {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+
+      @media (max-width: 550px) {
+        .cards {
+          grid-template-columns: 1fr;
+        }
+
+        .menu-link {
+          min-width: 100%;
+        }
+
+        .user-info {
+          display: none;
+        }
+
+        .page-title h1 {
+          font-size: 24px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <!-- =========================
+             SIDEBAR
+        ========================== -->
+
+      <aside class="sidebar">
+        <div>
+          <div class="logo-area">
+            <div class="logo">
+              <div class="logo-icon">D</div>
+
+              <div class="logo-text">Div<span>Pay</span></div>
+            </div>
+
+            <div class="slogan">Dividiu, pagou, partiu!</div>
+          </div>
+
+          <nav class="menu">
+            <a href="inicio.html" class="menu-link">
+              <span class="menu-icon">⌂</span>
+              <span>Início</span>
+            </a>
+
+            <a href="grupos.html" class="menu-link">
+              <span class="menu-icon">♟</span>
+              <span>Grupos</span>
+            </a>
+
+            <a href="despesas.html" class="menu-link">
+              <span class="menu-icon">▤</span>
+              <span>Despesas</span>
+            </a>
+
+            <a href="pagamentos.html" class="menu-link">
+              <span class="menu-icon">▣</span>
+              <span>Pagamentos</span>
+            </a>
+
+            <a href="resumo.html" class="menu-link">
+              <span class="menu-icon">▥</span>
+              <span>Resumo</span>
+            </a>
+
+            <a href="perfil.html" class="menu-link">
+              <span class="menu-icon">●</span>
+              <span>Perfil</span>
+            </a>
+          </nav>
+        </div>
+
+        <div class="menu-bottom">
+          <div class="menu-link sair" onclick="sair()">
+            <span class="menu-icon">↪</span>
+            <span>Sair</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- =========================
+             MAIN
+        ========================== -->
+
+      <main class="main">
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+          <button
+            class="top-button"
+            id="botaoTema"
+            onclick="alternarTema()"
+            title="Alterar tema"
+          >
+            ☀️
+          </button>
+
+          <button
+            class="top-button notification"
+            onclick="mostrarNotificacao()"
+            title="Notificações"
+          >
+            ♧
+          </button>
+
+          <div class="user-area" onclick="irParaPerfil()">
+            <div class="avatar" id="avatar">E</div>
+
+            <div class="user-info">
+              <div class="user-name" id="nomeUsuario">
+                Ewerton da Silva Morais
+              </div>
+
+              <div class="user-type">Usuário</div>
+            </div>
+
+            <div class="arrow">⌄</div>
+          </div>
+        </header>
+
+        <!-- CONTEÚDO -->
+
+        <div class="container">
+          <!-- CABEÇALHO -->
+
+          <section class="page-header">
+            <div class="page-title">
+              <h1>Dashboard</h1>
+
+              <p>Acompanhe suas despesas, grupos e acertos.</p>
+            </div>
+
+            <button class="primary-button" onclick="irParaGrupos()">
+              + Novo grupo
+            </button>
+          </section>
+
+          <!-- CARDS -->
+
+          <section class="cards">
+            <div class="card">
+              <div class="card-icon icon-blue">$</div>
+
+              <div class="card-label">Total em despesas</div>
+
+              <div class="card-value" id="totalDespesas">R$ 0,00</div>
+
+              <div class="card-small">Somatório dos seus grupos</div>
+            </div>
+
+            <div class="card">
+              <div class="card-icon icon-white">♟</div>
+
+              <div class="card-label">Grupos</div>
+
+              <div class="card-value" id="totalGrupos">0</div>
+
+              <div class="card-small">Grupos cadastrados</div>
+            </div>
+
+            <div class="card">
+              <div class="card-icon icon-green">✓</div>
+
+              <div class="card-label">Pagamentos</div>
+
+              <div class="card-value" id="totalPagamentos">0</div>
+
+              <div class="card-small">Acertos registrados</div>
+            </div>
+
+            <div class="card">
+              <div class="card-icon icon-blue">→</div>
+
+              <div class="card-label">Saldo</div>
+
+              <div class="card-value" id="saldoAtual">R$ 0,00</div>
+
+              <div class="card-small">Valor a receber ou pagar</div>
+            </div>
+          </section>
+
+          <!-- GRID -->
+
+          <section class="content-grid">
+            <!-- GRUPOS -->
+
+            <div class="panel">
+              <div class="panel-header">
+                <div>
+                  <h2>Meus grupos</h2>
+
+                  <p>Seus grupos mais recentes.</p>
+                </div>
+
+                <a href="grupos.html" class="panel-link"> Ver todos → </a>
+              </div>
+
+              <div class="group-list" id="listaGrupos"></div>
+            </div>
+
+            <!-- DESPESAS -->
+
+            <div class="panel">
+              <div class="panel-header">
+                <div>
+                  <h2>Últimas despesas</h2>
+
+                  <p>Movimentações recentes.</p>
+                </div>
+
+                <a href="despesas.html" class="panel-link"> Ver todas → </a>
+              </div>
+
+              <div class="expense-list" id="listaDespesas"></div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <!-- TOAST -->
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      /* =========================
+           LOGIN
+        ========================== */
+
+      function verificarLogin() {
+        if (localStorage.getItem("logado") !== "true") {
+          window.location.href = "index.html";
+
+          return false;
+        }
+
+        return true;
+      }
+
+      /* =========================
+           USUÁRIO
+        ========================== */
+
+      function carregarUsuario() {
+        let usuario = null;
+
+        try {
+          usuario = JSON.parse(localStorage.getItem("usuario"));
+        } catch (erro) {
+          usuario = null;
+        }
+
+        if (!usuario) {
+          usuario = {
+            nome: "Ewerton da Silva Morais",
+          };
+        }
+
+        const nome = usuario.nome || "Ewerton da Silva Morais";
+
+        document.getElementById("nomeUsuario").textContent = nome;
+
+        document.getElementById("avatar").textContent = nome
+          .trim()
+          .charAt(0)
+          .toUpperCase();
+      }
+
+      /* =========================
+           DADOS
+        ========================== */
+
+      function carregarDashboard() {
+        let grupos = [];
+        let despesas = [];
+        let pagamentos = [];
+
+        try {
+          grupos = JSON.parse(localStorage.getItem("divpay_grupos")) || [];
+        } catch (erro) {
+          grupos = [];
+        }
+
+        try {
+          despesas = JSON.parse(localStorage.getItem("divpay_despesas")) || [];
+        } catch (erro) {
+          despesas = [];
+        }
+
+        try {
+          pagamentos =
+            JSON.parse(localStorage.getItem("divpay_pagamentos")) || [];
+        } catch (erro) {
+          pagamentos = [];
+        }
+
+        if (!Array.isArray(grupos)) {
+          grupos = [];
+        }
+
+        if (!Array.isArray(despesas)) {
+          despesas = [];
+        }
+
+        if (!Array.isArray(pagamentos)) {
+          pagamentos = [];
+        }
+
+        /* =========================
+               TOTAL DESPESAS
+            ========================== */
+
+        let total = 0;
+
+        if (despesas.length > 0) {
+          despesas.forEach(function (despesa) {
+            total += Number(despesa.valor) || 0;
+          });
+        } else {
+          grupos.forEach(function (grupo) {
+            total += Number(grupo.total) || 0;
+          });
+        }
+
+        document.getElementById("totalDespesas").textContent =
+          formatarMoeda(total);
+
+        document.getElementById("totalGrupos").textContent = grupos.length;
+
+        document.getElementById("totalPagamentos").textContent =
+          pagamentos.length;
+
+        carregarSaldo(despesas);
+
+        carregarGrupos(grupos);
+
+        carregarDespesas(despesas);
+      }
+
+      /* =========================
+           SALDO
+        ========================== */
+
+      function carregarSaldo(despesas) {
+        let saldo = 0;
+
+        despesas.forEach(function (despesa) {
+          const valor = Number(despesa.valor) || 0;
+
+          const participantes = despesa.participantes || [];
+
+          const quantidade = participantes.length;
+
+          if (quantidade > 0) {
+            const minhaParte = valor / quantidade;
+
+            const pagoPor = String(despesa.pagoPor || "").toLowerCase();
+
+            const usuario = obterNomeUsuario().toLowerCase();
+
+            if (pagoPor === usuario) {
+              saldo += valor - minhaParte;
+            } else {
+              saldo -= minhaParte;
+            }
+          }
+        });
+
+        document.getElementById("saldoAtual").textContent =
+          formatarMoeda(saldo);
+      }
+
+      /* =========================
+           GRUPOS
+        ========================== */
+
+      function carregarGrupos(grupos) {
+        const lista = document.getElementById("listaGrupos");
+
+        lista.innerHTML = "";
+
+        if (grupos.length === 0) {
+          lista.innerHTML = `
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            👥
+                        </div>
+
+                        Você ainda não possui grupos.
+
+                    </div>
+                `;
+
+          return;
+        }
+
+        grupos.slice(0, 5).forEach(function (grupo) {
+          const participantes = grupo.participantes || grupo.membros || [];
+
+          const item = document.createElement("div");
+
+          item.className = "group-item";
+
+          item.onclick = function () {
+            abrirGrupo(grupo.id);
+          };
+
+          item.innerHTML = `
+
+                        <div class="group-icon">
+                            👥
+                        </div>
+
+                        <div class="group-info">
+
+                            <div class="group-name">
+                                ${escaparHTML(grupo.nome || "Grupo")}
+                            </div>
+
+                            <div class="group-members">
+                                ${participantes.length}
+                                participante${participantes.length === 1 ? "" : "s"}
+                            </div>
+
+                        </div>
+
+                        <div class="group-value">
+
+                            <strong>
+                                ${formatarMoeda(grupo.total)}
+                            </strong>
+
+                            <small>
+                                total
+                            </small>
+
+                        </div>
+
+                    `;
+
+          lista.appendChild(item);
+        });
+      }
+
+      /* =========================
+           DESPESAS
+        ========================== */
+
+      function carregarDespesas(despesas) {
+        const lista = document.getElementById("listaDespesas");
+
+        lista.innerHTML = "";
+
+        if (despesas.length === 0) {
+          lista.innerHTML = `
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            🧾
+                        </div>
+
+                        Nenhuma despesa registrada.
+
+                    </div>
+                `;
+
+          return;
+        }
+
+        despesas
+          .slice()
+          .reverse()
+          .slice(0, 5)
+          .forEach(function (despesa) {
+            const item = document.createElement("div");
+
+            item.className = "expense-item";
+
+            item.innerHTML = `
+
+                        <div class="expense-icon">
+                            $
+                        </div>
+
+                        <div class="expense-info">
+
+                            <div class="expense-name">
+                                ${escaparHTML(despesa.nome || "Despesa")}
+                            </div>
+
+                            <div class="expense-date">
+                                ${escaparHTML(
+                                  despesa.data || "Data não informada",
+                                )}
+                            </div>
+
+                        </div>
+
+                        <div class="expense-value">
+                            ${formatarMoeda(despesa.valor)}
+                        </div>
+
+                    `;
+
+            lista.appendChild(item);
+          });
+      }
+
+      /* =========================
+           ABRIR GRUPO
+        ========================== */
+
+      function abrirGrupo(id) {
+        localStorage.setItem("divpay_grupo_atual", String(id));
+
+        window.location.href = "detalhes-grupo.html";
+      }
+
+      /* =========================
+           USUÁRIO
+        ========================== */
+
+      function obterNomeUsuario() {
+        try {
+          const usuario = JSON.parse(localStorage.getItem("usuario"));
+
+          return usuario && usuario.nome ? usuario.nome : "Ewerton";
+        } catch (erro) {
+          return "Ewerton";
+        }
+      }
+
+      /* =========================
+           FORMATAR MOEDA
+        ========================== */
+
+      function formatarMoeda(valor) {
+        return Number(valor || 0).toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        });
+      }
+
+      /* =========================
+           ESCAPAR HTML
+        ========================== */
+
+      function escaparHTML(texto) {
+        const div = document.createElement("div");
+
+        div.textContent = texto;
+
+        return div.innerHTML;
+      }
+
+      /* =========================
+           TEMA
+        ========================== */
+
+      function alternarTema() {
+        document.body.classList.toggle("modo-claro");
+
+        const claro = document.body.classList.contains("modo-claro");
+
+        document.getElementById("botaoTema").innerHTML = claro ? "🌙" : "☀️";
+
+        localStorage.setItem("tema", claro ? "claro" : "escuro");
+      }
+
+      function carregarTema() {
+        const tema = localStorage.getItem("tema");
+
+        if (tema === "claro") {
+          document.body.classList.add("modo-claro");
+
+          document.getElementById("botaoTema").innerHTML = "🌙";
+        }
+      }
+
+      /* =========================
+           NAVEGAÇÃO
+        ========================== */
+
+      function irParaGrupos() {
+        window.location.href = "grupos.html";
+      }
+
+      function irParaPerfil() {
+        window.location.href = "perfil.html";
+      }
+
+      function mostrarNotificacao() {
+        mostrarToast("Você não possui novas notificações.");
+      }
+
+      function mostrarToast(mensagem) {
+        const toast = document.getElementById("toast");
+
+        toast.textContent = mensagem;
+
+        toast.classList.add("mostrar");
+
+        setTimeout(function () {
+          toast.classList.remove("mostrar");
+        }, 2500);
+      }
+
+      /* =========================
+           SAIR
+        ========================== */
+
+      function sair() {
+        localStorage.removeItem("logado");
+
+        window.location.href = "index.html";
+      }
+
+      /* =========================
+           INICIAR
+        ========================== */
+
+      document.addEventListener("DOMContentLoaded", function () {
+        if (!verificarLogin()) {
+          return;
+        }
+
+        carregarUsuario();
+
+        carregarDashboard();
+
+        carregarTema();
+      });
+    </script>
+  </body>
+</html>

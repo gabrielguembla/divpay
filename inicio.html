@@ -1,0 +1,1261 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>DivPay - Início</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body {
+        background: #000000;
+        color: #fdfdfd;
+        min-height: 100vh;
+      }
+
+      /* =========================
+           ESTRUTURA
+        ========================= */
+
+      .app {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      /* =========================
+           SIDEBAR
+        ========================= */
+
+      .sidebar {
+        width: 250px;
+        min-height: 100vh;
+        background: #002e6c;
+        padding: 30px 18px 20px;
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 100;
+      }
+
+      .logo-area {
+        text-align: center;
+        margin-bottom: 45px;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .logo-icon {
+        width: 42px;
+        height: 42px;
+        background: #0362f2;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 23px;
+        font-weight: bold;
+        color: #fdfdfd;
+      }
+
+      .logo-text {
+        font-size: 27px;
+        font-weight: bold;
+        color: #fdfdfd;
+      }
+
+      .logo-text span {
+        color: #0362f2;
+      }
+
+      .slogan {
+        margin-top: 8px;
+        font-size: 10px;
+        color: #d7e7ff;
+      }
+
+      /* =========================
+           MENU
+        ========================= */
+
+      .menu {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+
+      .menu-link {
+        height: 48px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 0 17px;
+        border-radius: 10px;
+        color: #dbeaff;
+        text-decoration: none;
+        font-size: 14px;
+        transition: 0.2s;
+      }
+
+      .menu-link:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: #fdfdfd;
+      }
+
+      .menu-link.ativo {
+        background: #0362f2;
+        color: #fdfdfd;
+      }
+
+      .menu-icon {
+        width: 20px;
+        text-align: center;
+        font-size: 17px;
+      }
+
+      .menu-bottom {
+        margin-top: auto;
+      }
+
+      .sair {
+        cursor: pointer;
+      }
+
+      /* =========================
+           CONTEÚDO
+        ========================= */
+
+      .main {
+        margin-left: 250px;
+        width: calc(100% - 250px);
+        min-height: 100vh;
+        background: #000000;
+      }
+
+      /* =========================
+           TOPO
+        ========================= */
+
+      .topbar {
+        height: 95px;
+        border-bottom: 1px solid #202020;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0 45px;
+        gap: 15px;
+      }
+
+      .top-button {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1px solid #303030;
+        background: #111111;
+        color: #fdfdfd;
+        cursor: pointer;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s;
+      }
+
+      .top-button:hover {
+        background: #1c1c1c;
+      }
+
+      .notification {
+        position: relative;
+      }
+
+      .notification::after {
+        content: "";
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: #3abb47;
+        border-radius: 50%;
+        top: 9px;
+        right: 10px;
+      }
+
+      .user-area {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        margin-left: 5px;
+        cursor: pointer;
+      }
+
+      .avatar {
+        width: 43px;
+        height: 43px;
+        background: #0362f2;
+        color: #fdfdfd;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .user-info {
+        min-width: 145px;
+      }
+
+      .user-name {
+        font-size: 13px;
+        font-weight: bold;
+        color: #fdfdfd;
+      }
+
+      .user-type {
+        font-size: 11px;
+        color: #7fa8dc;
+        margin-top: 3px;
+      }
+
+      .arrow {
+        font-size: 12px;
+        color: #8faed0;
+      }
+
+      /* =========================
+           CONTAINER
+        ========================= */
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 42px 40px 50px;
+      }
+
+      /* =========================
+           BOAS-VINDAS
+        ========================= */
+
+      .welcome {
+        margin-bottom: 30px;
+      }
+
+      .welcome h1 {
+        font-size: 29px;
+        margin-bottom: 9px;
+      }
+
+      .welcome h1 span {
+        color: #0362f2;
+      }
+
+      .welcome p {
+        color: #8ca6c5;
+        font-size: 14px;
+      }
+
+      /* =========================
+           CARDS PRINCIPAIS
+        ========================= */
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-bottom: 30px;
+      }
+
+      .card {
+        background: #111111;
+        border: 1px solid #303030;
+        border-radius: 15px;
+        padding: 23px;
+        min-height: 145px;
+      }
+
+      .card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 20px;
+      }
+
+      .card-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 19px;
+      }
+
+      .blue-icon {
+        background: #eaf2ff;
+        color: #0362f2;
+      }
+
+      .green-icon {
+        background: #eaf8ec;
+        color: #3abb47;
+      }
+
+      .white-icon {
+        background: #fdfdfd;
+        color: #002e6c;
+      }
+
+      .card-label {
+        font-size: 11px;
+        color: #7190b5;
+        margin-bottom: 7px;
+      }
+
+      .card-value {
+        font-size: 24px;
+        font-weight: bold;
+        color: #fdfdfd;
+      }
+
+      .card-description {
+        font-size: 11px;
+        color: #7895b7;
+        margin-top: 7px;
+      }
+
+      /* =========================
+           SEÇÃO
+        ========================= */
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 17px;
+      }
+
+      .section-title {
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .section-link {
+        color: #4f9aff;
+        text-decoration: none;
+        font-size: 12px;
+      }
+
+      .section-link:hover {
+        text-decoration: underline;
+      }
+
+      /* =========================
+           ÁREA INFERIOR
+        ========================= */
+
+      .bottom-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        gap: 20px;
+      }
+
+      .panel {
+        background: #111111;
+        border: 1px solid #303030;
+        border-radius: 15px;
+        overflow: hidden;
+      }
+
+      .panel-header {
+        padding: 20px;
+        border-bottom: 1px solid #303030;
+      }
+
+      .panel-header h2 {
+        font-size: 16px;
+        margin-bottom: 5px;
+      }
+
+      .panel-header p {
+        color: #7895b7;
+        font-size: 11px;
+      }
+
+      /* =========================
+           GRUPOS
+        ========================= */
+
+      .group-list {
+        padding: 10px 20px;
+      }
+
+      .group-item {
+        min-height: 68px;
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        border-bottom: 1px solid #292929;
+      }
+
+      .group-item:last-child {
+        border-bottom: none;
+      }
+
+      .group-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: #0362f2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+      }
+
+      .group-info {
+        flex: 1;
+      }
+
+      .group-name {
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 4px;
+      }
+
+      .group-members {
+        color: #7895b7;
+        font-size: 10px;
+      }
+
+      .group-total {
+        text-align: right;
+      }
+
+      .group-total strong {
+        display: block;
+        font-size: 13px;
+      }
+
+      .group-total small {
+        color: #7895b7;
+        font-size: 9px;
+      }
+
+      /* =========================
+           AÇÕES
+        ========================= */
+
+      .action-list {
+        padding: 12px 20px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .action-button {
+        width: 100%;
+        min-height: 55px;
+        border: 1px solid #303030;
+        background: #151515;
+        border-radius: 10px;
+        color: #fdfdfd;
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        padding: 10px 14px;
+        cursor: pointer;
+        text-align: left;
+        transition: 0.2s;
+      }
+
+      .action-button:hover {
+        border-color: #0362f2;
+        background: #181818;
+      }
+
+      .action-button-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        background: #0362f2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .action-button-text strong {
+        display: block;
+        font-size: 12px;
+        margin-bottom: 4px;
+      }
+
+      .action-button-text span {
+        display: block;
+        font-size: 10px;
+        color: #7895b7;
+      }
+
+      /* =========================
+           ESTADO VAZIO
+        ========================= */
+
+      .empty {
+        padding: 35px 20px;
+        text-align: center;
+        color: #7895b7;
+        font-size: 12px;
+      }
+
+      .empty-icon {
+        font-size: 27px;
+        margin-bottom: 10px;
+      }
+
+      /* =========================
+           TOAST
+        ========================= */
+
+      .toast {
+        position: fixed;
+        right: 25px;
+        bottom: 25px;
+        background: #fdfdfd;
+        color: #000000;
+        padding: 13px 18px;
+        border-radius: 9px;
+        font-size: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+        opacity: 0;
+        transform: translateY(20px);
+        pointer-events: none;
+        transition: 0.3s;
+        z-index: 500;
+      }
+
+      .toast.mostrar {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* =========================
+           MODO CLARO
+        ========================= */
+
+      body.modo-claro {
+        background: #f2f5f9;
+        color: #000000;
+      }
+
+      body.modo-claro .main {
+        background: #f2f5f9;
+      }
+
+      body.modo-claro .topbar {
+        border-color: #dce2e9;
+      }
+
+      body.modo-claro .top-button {
+        background: #fdfdfd;
+        border-color: #d7dce3;
+        color: #002e6c;
+      }
+
+      body.modo-claro .user-name {
+        color: #000000;
+      }
+
+      body.modo-claro .welcome h1 {
+        color: #000000;
+      }
+
+      body.modo-claro .welcome p {
+        color: #64748b;
+      }
+
+      body.modo-claro .card,
+      body.modo-claro .panel {
+        background: #fdfdfd;
+        border-color: #dce2e9;
+      }
+
+      body.modo-claro .card-value,
+      body.modo-claro .section-title,
+      body.modo-claro .panel-header h2,
+      body.modo-claro .group-name {
+        color: #000000;
+      }
+
+      body.modo-claro .card-label,
+      body.modo-claro .card-description,
+      body.modo-claro .panel-header p,
+      body.modo-claro .group-members,
+      body.modo-claro .group-total small {
+        color: #64748b;
+      }
+
+      body.modo-claro .panel-header,
+      body.modo-claro .group-item {
+        border-color: #e1e5eb;
+      }
+
+      body.modo-claro .action-button {
+        background: #fdfdfd;
+        border-color: #dce2e9;
+        color: #000000;
+      }
+
+      body.modo-claro .action-button:hover {
+        background: #f5f8fc;
+      }
+
+      /* =========================
+           RESPONSIVO
+        ========================= */
+
+      @media (max-width: 1000px) {
+        .sidebar {
+          width: 220px;
+        }
+
+        .main {
+          margin-left: 220px;
+          width: calc(100% - 220px);
+        }
+
+        .cards {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .bottom-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 750px) {
+        .sidebar {
+          position: relative;
+          width: 100%;
+          min-height: auto;
+          padding: 18px;
+        }
+
+        .app {
+          display: block;
+        }
+
+        .main {
+          margin-left: 0;
+          width: 100%;
+        }
+
+        .logo-area {
+          margin-bottom: 20px;
+        }
+
+        .menu {
+          flex-direction: row;
+          flex-wrap: wrap;
+        }
+
+        .menu-link {
+          flex: 1;
+          min-width: 120px;
+        }
+
+        .menu-bottom {
+          margin-top: 15px;
+        }
+
+        .topbar {
+          height: 75px;
+          padding: 0 20px;
+        }
+
+        .container {
+          padding: 30px 20px 40px;
+        }
+      }
+
+      @media (max-width: 550px) {
+        .cards {
+          grid-template-columns: 1fr;
+        }
+
+        .topbar {
+          justify-content: space-between;
+        }
+
+        .user-info {
+          display: none;
+        }
+
+        .welcome h1 {
+          font-size: 24px;
+        }
+
+        .bottom-grid {
+          gap: 15px;
+        }
+
+        .menu-link {
+          min-width: 100%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <!-- =========================
+             SIDEBAR
+        ========================== -->
+
+      <aside class="sidebar">
+        <div>
+          <div class="logo-area">
+            <div class="logo">
+              <div class="logo-icon">D</div>
+
+              <div class="logo-text">Div<span>Pay</span></div>
+            </div>
+
+            <div class="slogan">Dividiu, pagou, partiu!</div>
+          </div>
+
+          <nav class="menu">
+            <a href="inicio.html" class="menu-link ativo">
+              <span class="menu-icon">⌂</span>
+              <span>Início</span>
+            </a>
+
+            <a href="grupos.html" class="menu-link">
+              <span class="menu-icon">♟</span>
+              <span>Grupos</span>
+            </a>
+
+            <a href="despesas.html" class="menu-link">
+              <span class="menu-icon">▤</span>
+              <span>Despesas</span>
+            </a>
+
+            <a href="pagamentos.html" class="menu-link">
+              <span class="menu-icon">▣</span>
+              <span>Pagamentos</span>
+            </a>
+
+            <a href="resumo.html" class="menu-link">
+              <span class="menu-icon">▥</span>
+              <span>Resumo</span>
+            </a>
+
+            <a href="perfil.html" class="menu-link">
+              <span class="menu-icon">●</span>
+              <span>Perfil</span>
+            </a>
+          </nav>
+        </div>
+
+        <div class="menu-bottom">
+          <div class="menu-link sair" onclick="sair()">
+            <span class="menu-icon">↪</span>
+            <span>Sair</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- =========================
+             CONTEÚDO PRINCIPAL
+        ========================== -->
+
+      <main class="main">
+        <!-- TOPO -->
+
+        <header class="topbar">
+          <button
+            class="top-button"
+            id="botaoTema"
+            onclick="alternarTema()"
+            title="Alterar tema"
+          >
+            ☀️
+          </button>
+
+          <button
+            class="top-button notification"
+            onclick="mostrarNotificacao()"
+            title="Notificações"
+          >
+            ♧
+          </button>
+
+          <div class="user-area" onclick="irParaPerfil()">
+            <div class="avatar" id="avatar">E</div>
+
+            <div class="user-info">
+              <div class="user-name" id="nomeUsuario">
+                Ewerton da Silva Morais
+              </div>
+
+              <div class="user-type">Usuário</div>
+            </div>
+
+            <div class="arrow">⌄</div>
+          </div>
+        </header>
+
+        <!-- CONTAINER -->
+
+        <div class="container">
+          <!-- BOAS-VINDAS -->
+
+          <section class="welcome">
+            <h1>Olá, <span id="primeiroNome">Ewerton</span>!</h1>
+
+            <p>Organize suas despesas e divida tudo de forma simples.</p>
+          </section>
+
+          <!-- CARDS -->
+
+          <section class="cards">
+            <!-- TOTAL -->
+
+            <div class="card">
+              <div class="card-top">
+                <div class="card-icon blue-icon">$</div>
+              </div>
+
+              <div class="card-label">Total dividido</div>
+
+              <div class="card-value" id="totalDividido">R$ 0,00</div>
+
+              <div class="card-description">Em todos os seus grupos</div>
+            </div>
+
+            <!-- GRUPOS -->
+
+            <div class="card">
+              <div class="card-top">
+                <div class="card-icon white-icon">♟</div>
+              </div>
+
+              <div class="card-label">Meus grupos</div>
+
+              <div class="card-value" id="totalGrupos">0</div>
+
+              <div class="card-description">Grupos cadastrados</div>
+            </div>
+
+            <!-- ACERTOS -->
+
+            <div class="card">
+              <div class="card-top">
+                <div class="card-icon green-icon">↓</div>
+              </div>
+
+              <div class="card-label">Acertos realizados</div>
+
+              <div class="card-value" id="totalAcertos">0</div>
+
+              <div class="card-description">Pagamentos registrados</div>
+            </div>
+          </section>
+
+          <!-- ÁREA INFERIOR -->
+
+          <section class="bottom-grid">
+            <!-- MEUS GRUPOS -->
+
+            <div class="panel">
+              <div class="panel-header">
+                <div class="section-header">
+                  <div>
+                    <h2>Meus grupos</h2>
+
+                    <p>Acompanhe seus grupos recentes.</p>
+                  </div>
+
+                  <a href="grupos.html" class="section-link"> Ver todos → </a>
+                </div>
+              </div>
+
+              <div class="group-list" id="listaGrupos"></div>
+            </div>
+
+            <!-- AÇÕES -->
+
+            <div class="panel">
+              <div class="panel-header">
+                <h2>Acesso rápido</h2>
+
+                <p>O que você deseja fazer?</p>
+              </div>
+
+              <div class="action-list">
+                <button class="action-button" onclick="irParaGrupos()">
+                  <div class="action-button-icon">+</div>
+
+                  <div class="action-button-text">
+                    <strong> Criar ou acessar grupo </strong>
+
+                    <span> Organize despesas com outras pessoas </span>
+                  </div>
+                </button>
+
+                <button class="action-button" onclick="irParaDespesas()">
+                  <div class="action-button-icon">$</div>
+
+                  <div class="action-button-text">
+                    <strong> Adicionar despesa </strong>
+
+                    <span> Registre uma nova despesa </span>
+                  </div>
+                </button>
+
+                <button class="action-button" onclick="irParaPagamentos()">
+                  <div class="action-button-icon">✓</div>
+
+                  <div class="action-button-text">
+                    <strong> Ver pagamentos </strong>
+
+                    <span> Consulte seus acertos </span>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <!-- TOAST -->
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      /* =========================
+           VERIFICAR LOGIN
+        ========================== */
+
+      function verificarLogin() {
+        const logado = localStorage.getItem("logado");
+
+        if (logado !== "true") {
+          window.location.href = "index.html";
+          return false;
+        }
+
+        return true;
+      }
+
+      /* =========================
+           CARREGAR USUÁRIO
+        ========================== */
+
+      function carregarUsuario() {
+        let usuario = null;
+
+        try {
+          usuario = JSON.parse(localStorage.getItem("usuario"));
+        } catch (erro) {
+          usuario = null;
+        }
+
+        if (!usuario) {
+          usuario = {
+            nome: "Ewerton da Silva Morais",
+            email: "",
+          };
+        }
+
+        const nomeCompleto = usuario.nome || "Ewerton da Silva Morais";
+
+        const primeiroNome = nomeCompleto.trim().split(" ")[0];
+
+        document.getElementById("nomeUsuario").textContent = nomeCompleto;
+
+        document.getElementById("primeiroNome").textContent = primeiroNome;
+
+        document.getElementById("avatar").textContent = primeiroNome
+          .charAt(0)
+          .toUpperCase();
+      }
+
+      /* =========================
+           LER GRUPOS
+        ========================== */
+
+      function carregarGrupos() {
+        let grupos = [];
+
+        try {
+          grupos = JSON.parse(localStorage.getItem("divpay_grupos"));
+
+          if (!Array.isArray(grupos)) {
+            grupos = [];
+          }
+        } catch (erro) {
+          grupos = [];
+        }
+
+        const lista = document.getElementById("listaGrupos");
+
+        document.getElementById("totalGrupos").textContent = grupos.length;
+
+        /* =========================
+               CALCULAR TOTAL
+            ========================== */
+
+        let total = 0;
+
+        grupos.forEach(function (grupo) {
+          total += Number(grupo.total) || 0;
+        });
+
+        document.getElementById("totalDividido").textContent =
+          formatarMoeda(total);
+
+        /* =========================
+               LISTA DE GRUPOS
+            ========================== */
+
+        lista.innerHTML = "";
+
+        if (grupos.length === 0) {
+          lista.innerHTML = `
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            👥
+                        </div>
+
+                        <div>
+                            Você ainda não possui grupos.
+                        </div>
+
+                    </div>
+                `;
+
+          return;
+        }
+
+        /* Mostrar somente os 4 primeiros */
+
+        const gruposExibidos = grupos.slice(0, 4);
+
+        gruposExibidos.forEach(function (grupo) {
+          const participantes = grupo.participantes || grupo.membros || [];
+
+          const quantidade =
+            participantes.length || Number(grupo.qtdParticipantes) || 0;
+
+          const nome = grupo.nome || "Grupo sem nome";
+
+          const totalGrupo = Number(grupo.total) || 0;
+
+          const item = document.createElement("div");
+
+          item.className = "group-item";
+
+          item.style.cursor = "pointer";
+
+          item.onclick = function () {
+            abrirGrupo(grupo.id);
+          };
+
+          item.innerHTML = `
+
+                    <div class="group-icon">
+                        👥
+                    </div>
+
+                    <div class="group-info">
+
+                        <div class="group-name">
+                            ${escaparHTML(nome)}
+                        </div>
+
+                        <div class="group-members">
+                            ${quantidade} participante${quantidade === 1 ? "" : "s"}
+                        </div>
+
+                    </div>
+
+                    <div class="group-total">
+
+                        <strong>
+                            ${formatarMoeda(totalGrupo)}
+                        </strong>
+
+                        <small>
+                            total
+                        </small>
+
+                    </div>
+
+                `;
+
+          lista.appendChild(item);
+        });
+      }
+
+      /* =========================
+           ABRIR GRUPO
+        ========================== */
+
+      function abrirGrupo(id) {
+        localStorage.setItem("divpay_grupo_atual", String(id));
+
+        window.location.href = "detalhes-grupo.html";
+      }
+
+      /* =========================
+           FORMATAR MOEDA
+        ========================== */
+
+      function formatarMoeda(valor) {
+        return Number(valor || 0).toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        });
+      }
+
+      /* =========================
+           ESCAPAR HTML
+        ========================== */
+
+      function escaparHTML(texto) {
+        const div = document.createElement("div");
+
+        div.textContent = texto;
+
+        return div.innerHTML;
+      }
+
+      /* =========================
+           TEMA
+        ========================== */
+
+      function alternarTema() {
+        const body = document.body;
+
+        const botao = document.getElementById("botaoTema");
+
+        body.classList.toggle("modo-claro");
+
+        if (body.classList.contains("modo-claro")) {
+          botao.innerHTML = "🌙";
+
+          localStorage.setItem("tema", "claro");
+        } else {
+          botao.innerHTML = "☀️";
+
+          localStorage.setItem("tema", "escuro");
+        }
+      }
+
+      /* =========================
+           CARREGAR TEMA
+        ========================== */
+
+      function carregarTema() {
+        const tema = localStorage.getItem("tema");
+
+        const botao = document.getElementById("botaoTema");
+
+        if (tema === "claro") {
+          document.body.classList.add("modo-claro");
+
+          botao.innerHTML = "🌙";
+        } else {
+          document.body.classList.remove("modo-claro");
+
+          botao.innerHTML = "☀️";
+        }
+      }
+
+      /* =========================
+           NOTIFICAÇÃO
+        ========================== */
+
+      function mostrarNotificacao() {
+        mostrarToast("Você não possui novas notificações.");
+      }
+
+      /* =========================
+           NAVEGAÇÃO
+        ========================== */
+
+      function irParaPerfil() {
+        window.location.href = "perfil.html";
+      }
+
+      function irParaGrupos() {
+        window.location.href = "grupos.html";
+      }
+
+      function irParaDespesas() {
+        window.location.href = "despesas.html";
+      }
+
+      function irParaPagamentos() {
+        window.location.href = "pagamentos.html";
+      }
+
+      /* =========================
+           SAIR
+        ========================== */
+
+      function sair() {
+        localStorage.removeItem("logado");
+
+        window.location.href = "index.html";
+      }
+
+      /* =========================
+           TOAST
+        ========================== */
+
+      function mostrarToast(mensagem) {
+        const toast = document.getElementById("toast");
+
+        toast.textContent = mensagem;
+
+        toast.classList.add("mostrar");
+
+        setTimeout(function () {
+          toast.classList.remove("mostrar");
+        }, 2500);
+      }
+
+      /* =========================
+           INICIAR PÁGINA
+        ========================== */
+
+      document.addEventListener("DOMContentLoaded", function () {
+        if (!verificarLogin()) {
+          return;
+        }
+
+        carregarUsuario();
+
+        carregarGrupos();
+
+        carregarTema();
+      });
+    </script>
+  </body>
+</html>
